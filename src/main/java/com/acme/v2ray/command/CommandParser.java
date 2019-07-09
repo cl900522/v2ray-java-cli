@@ -1,0 +1,49 @@
+package com.acme.v2ray.command;
+
+import com.acme.v2ray.command.impl.*;
+
+/**
+ * @author: cdchenmingxuan
+ * @date: 2019/7/8 21:47
+ * @description: v2rayjavacli
+ */
+public class CommandParser {
+    public void parse(Context context, String commandLine) {
+        commandLine = commandLine.trim();
+        int i = commandLine.indexOf(" ");
+
+        String commandTip = null, commandBody = null;
+        if (i == -1) {
+            commandTip = commandLine;
+        } else {
+            commandTip = commandLine.substring(0, i);
+            commandBody = commandLine.substring(i, commandLine.length());
+            commandBody = commandBody.trim();
+        }
+
+        CommandExecutor executor = null;
+        if (CommandTip.SUB.getTip().equals(commandTip)) {
+            executor = new SubExecutor();
+        } else if (CommandTip.SAVE.getTip().equals(commandTip)) {
+            executor = new SaveExecutor();
+        } else if (CommandTip.RELOAD.getTip().equals(commandTip)) {
+            executor = new ReloadExecutor();
+        } else if (CommandTip.LOAD.getTip().equals(commandTip)) {
+            executor = new ReloadExecutor();
+        } else if (CommandTip.SELECT.getTip().equals(commandTip)) {
+            executor = new SelectExecutor();
+        } else if (CommandTip.LIST.getTip().equals(commandTip)) {
+            executor = new ListExecutor();
+        } else if (CommandTip.EXIT.getTip().equals(commandTip)) {
+            executor = new ExitExecutor();
+        } else if (CommandTip.STATUS.getTip().equals(commandTip)) {
+            executor = new StatusExecutor();
+        } else if (CommandTip.HELP.getTip().equals(commandTip)) {
+            executor = new HelpExecutor();
+        } else {
+            executor = new HelpExecutor();
+        }
+
+        executor.execute(context, commandBody);
+    }
+}
