@@ -1,11 +1,7 @@
 package com.acme.v2rat;
 
 import com.acme.v2ray.Main;
-import com.acme.v2ray.domain.V2rayServer;
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * @author: cdchenmingxuan

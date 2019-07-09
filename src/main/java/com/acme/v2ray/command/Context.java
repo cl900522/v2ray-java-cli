@@ -10,13 +10,15 @@ import java.util.List;
  * @description: v2rayjavacli
  */
 public class Context {
+    public static final String V2RAY_EXE_PATH = "C:/Program File/V2Ray";
+
     private Integer proxyPort = 1080;
 
     private String subUrl;
 
     private String serverId;
 
-    private String v2rayPath = "C:/Program File/V2Ray";
+    private String v2rayPath = V2RAY_EXE_PATH;
 
     private List<V2rayServer> servers;
 
@@ -41,6 +43,9 @@ public class Context {
     }
 
     public void setV2rayPath(String v2rayPath) {
+        if (v2rayPath == null || v2rayPath.trim().equals("")) {
+            v2rayPath = V2RAY_EXE_PATH;
+        }
         this.v2rayPath = v2rayPath;
     }
 

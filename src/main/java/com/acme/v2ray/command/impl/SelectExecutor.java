@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
  * @date: 2019/7/8 21:26
  * @description: v2rayjavacli
  */
-public class SelectExecutor implements CommandExecutor {
-    private static final String COMMAND_FORMAT = "\"C:\\Program Files\\V2Ray\\v2ray.exe\" -config %s &";
+public class SelectExecutor extends AbsExecutor {
+    private static final String COMMAND_FORMAT = "%s -config %s &";
     private static Pattern pattern = Pattern.compile("[0-9]*");
 
     public void execute(Context context, String commandBody) {
@@ -56,10 +56,13 @@ public class SelectExecutor implements CommandExecutor {
         }
 
         try {
-            String command = String.format(COMMAND_FORMAT, v2rayConfigPath);
+            killv2rayServer();
+            Tip.success("检查并关闭遗留v2ray服务");
+
+            String command = String.format(COMMAND_FORMAT, context.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec(command);
+
+            Runtime.getRuntime().exec(command);
             Tip.success("本地代理服务启动成功");
         } catch (Exception e) {
             Tip.fail("启动服务失败：");

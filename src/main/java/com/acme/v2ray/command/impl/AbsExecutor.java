@@ -3,6 +3,7 @@ package com.acme.v2ray.command.impl;
 import com.acme.v2ray.command.CommandExecutor;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.io.Tip;
+import com.acme.v2ray.util.OSUtil;
 
 import java.util.List;
 
@@ -26,5 +27,20 @@ public abstract class AbsExecutor implements CommandExecutor {
             index++;
         }
         Tip.success("请使用select [n]选择服务的代号：");
+    }
+
+
+    protected void killv2rayServer() {
+        try {
+            switch (OSUtil.os) {
+                case WINDOWNS:
+                    Runtime.getRuntime().exec("taskkill /im v2ray.exe /f");
+                    break;
+                default:
+                    Runtime.getRuntime().exec("killall v2ray");
+                    break;
+            }
+        } catch (Exception e) {
+        }
     }
 }
