@@ -16,6 +16,8 @@ public enum CommandTip {
     SELECT("select", "select [index]", "选择服务器编号"),
     LIST("list", "list", "显示服务器列表"),
     STATUS("status", "status", "显示服务状态"),
+    SET("set", "set [k]=[v]", "设置参数"),
+    ENV("env", "env", "显示参数"),
     EXIT("exit", "exit", "退出命令");
 
     private String tip;

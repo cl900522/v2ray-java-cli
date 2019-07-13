@@ -40,6 +40,10 @@ public class CommandParser {
             executor = new StatusExecutor();
         } else if (CommandTip.HELP.getTip().equals(commandTip)) {
             executor = new HelpExecutor();
+        } else if (CommandTip.SET.getTip().equals(commandTip)) {
+            executor = new SetExecutor();
+        } else if (CommandTip.ENV.getTip().equals(commandTip)) {
+            executor = new EnvExecutor();
         } else {
             executor = new HelpExecutor();
         }

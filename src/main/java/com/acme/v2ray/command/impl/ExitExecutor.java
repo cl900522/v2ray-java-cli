@@ -11,7 +11,6 @@ import com.acme.v2ray.io.Tip;
  * @description: v2rayjavacli
  */
 public class ExitExecutor implements CommandExecutor {
-    private static CommandTip[] tips = CommandTip.values();
 
     public void execute(Context context, String commandBody) {
         Tip.success("即将退出！");

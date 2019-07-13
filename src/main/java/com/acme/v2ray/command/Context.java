@@ -1,8 +1,11 @@
 package com.acme.v2ray.command;
 
+import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: cdchenmingxuan
@@ -10,17 +13,16 @@ import java.util.List;
  * @description: v2rayjavacli
  */
 public class Context {
-    public static final String V2RAY_EXE_PATH = "C:/Program File/V2Ray";
 
-    private Integer proxyPort = 1080;
+    private Boolean started = false;
 
     private String subUrl;
 
     private String serverId;
 
-    private String v2rayPath = V2RAY_EXE_PATH;
-
     private List<V2rayServer> servers;
+
+    private Map<String, String> envs = new HashMap<String, String>();
 
     public String getSubUrl() {
         return subUrl;
@@ -38,30 +40,31 @@ public class Context {
         this.serverId = serverId;
     }
 
-    public String getV2rayPath() {
-        return v2rayPath;
-    }
-
-    public void setV2rayPath(String v2rayPath) {
-        if (v2rayPath == null || v2rayPath.trim().equals("")) {
-            v2rayPath = V2RAY_EXE_PATH;
-        }
-        this.v2rayPath = v2rayPath;
-    }
-
-    public Integer getProxyPort() {
-        return proxyPort;
-    }
-
-    public void setProxyPort(Integer proxyPort) {
-        this.proxyPort = proxyPort;
-    }
-
     public List<V2rayServer> getServers() {
         return servers;
     }
 
     public void setServers(List<V2rayServer> servers) {
         this.servers = servers;
+    }
+
+    public Map<String, String> getEnvs() {
+        return envs;
+    }
+
+    public void setEnvs(Map<String, String> envs) {
+        this.envs = envs;
+    }
+
+    public Env buildEnv() {
+        return new Env(envs);
+    }
+
+    public Boolean getStarted() {
+        return started;
+    }
+
+    public void setStarted(Boolean started) {
+        this.started = started;
     }
 }

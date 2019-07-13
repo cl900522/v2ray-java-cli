@@ -16,7 +16,6 @@ import java.io.FileInputStream;
  * @description: v2rayjavacli
  */
 public class ReloadExecutor implements CommandExecutor {
-    private static CommandTip[] tips = CommandTip.values();
 
     public void execute(Context context, String commandBody) {
         File file = new File(".config");
@@ -31,9 +30,8 @@ public class ReloadExecutor implements CommandExecutor {
             if (oldContext != null) {
                 context.setSubUrl(oldContext.getSubUrl());
                 context.setServers(oldContext.getServers());
-                context.setProxyPort(oldContext.getProxyPort());
                 context.setServerId(oldContext.getServerId());
-                context.setV2rayPath(oldContext.getV2rayPath());
+                context.setEnvs(oldContext.getEnvs());
             }
             Tip.success("恢复归档成功:" + file.getAbsolutePath());
         } catch (Exception e) {

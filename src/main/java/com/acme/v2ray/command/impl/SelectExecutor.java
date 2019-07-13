@@ -2,6 +2,7 @@ package com.acme.v2ray.command.impl;
 
 import com.acme.v2ray.command.CommandExecutor;
 import com.acme.v2ray.command.Context;
+import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.StreamUtil;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
  * @description: v2rayjavacli
  */
 public class SelectExecutor extends AbsExecutor {
-    private static final String COMMAND_FORMAT = "%s -config %s &";
+    private static final String COMMAND_FORMAT = "nohup %s -config %s &";
     private static Pattern pattern = Pattern.compile("[0-9]*");
 
     public void execute(Context context, String commandBody) {
@@ -48,6 +49,7 @@ public class SelectExecutor extends AbsExecutor {
         if (v2rayServer == null) {
             return;
         }
+        context.setServerId(v2rayServer.getId());
 
         String v2rayConfigPath = createV2rayConfigFile(context, v2rayServer);
         if (v2rayConfigPath == null || v2rayConfigPath.trim().equals("")) {
@@ -59,10 +61,13 @@ public class SelectExecutor extends AbsExecutor {
             killv2rayServer();
             Tip.success("检查并关闭遗留v2ray服务");
 
-            String command = String.format(COMMAND_FORMAT, context.getV2rayPath(), v2rayConfigPath);
+            Env env = context.buildEnv();
+
+            String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
             Runtime.getRuntime().exec(command);
+            context.setStarted(true);
             Tip.success("本地代理服务启动成功");
         } catch (Exception e) {
             Tip.fail("启动服务失败：");
@@ -72,6 +77,8 @@ public class SelectExecutor extends AbsExecutor {
 
     private String createV2rayConfigFile(Context context, V2rayServer v2rayServer) {
         String content = null;
+        Env env = context.buildEnv();
+
         try {
             InputStream resourceInStream = this.getClass().getResourceAsStream("/v2ray-config.json.tpl");
             String template = StreamUtil.toString(resourceInStream);
@@ -80,8 +87,7 @@ public class SelectExecutor extends AbsExecutor {
             template = template.replace("${server.id}", v2rayServer.getId());
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
-            template = template.replace("${server.email}", v2rayServer.getId());
-            template = template.replace("${local.port}", String.valueOf(context.getProxyPort()));
+            template = template.replace("${local.port}", String.valueOf(env.getLocalPort()));
             content = template;
         } catch (Exception e) {
             Tip.fail("生成v2ray配置文件内容失败");
