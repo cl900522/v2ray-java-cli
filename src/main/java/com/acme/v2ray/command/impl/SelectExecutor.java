@@ -1,6 +1,5 @@
 package com.acme.v2ray.command.impl;
 
-import com.acme.v2ray.command.CommandExecutor;
 import com.acme.v2ray.command.Context;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
@@ -49,7 +48,7 @@ public class SelectExecutor extends AbsExecutor {
         if (v2rayServer == null) {
             return;
         }
-        context.setServerId(v2rayServer.getId());
+        context.setServerName(String.format("%s - (%s:%s)", v2rayServer.getPs(), v2rayServer.getAdd(), v2rayServer.getPort()));
 
         String v2rayConfigPath = createV2rayConfigFile(context, v2rayServer);
         if (v2rayConfigPath == null || v2rayConfigPath.trim().equals("")) {
@@ -61,16 +60,19 @@ public class SelectExecutor extends AbsExecutor {
             killv2rayServer();
             Tip.success("检查并关闭遗留v2ray服务");
 
-            Env env = context.buildEnv();
+            Tip.success("等待3s...");
+            Thread.sleep(3000);
 
+            Env env = context.buildEnv();
             String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
             Runtime.getRuntime().exec(command);
-            context.setStarted(true);
             Tip.success("本地代理服务启动成功");
+            context.setStarted(true);
         } catch (Exception e) {
             Tip.fail("启动服务失败：");
+            context.setStarted(false);
             e.printStackTrace();
         }
     }
@@ -88,6 +90,7 @@ public class SelectExecutor extends AbsExecutor {
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
             template = template.replace("${local.port}", String.valueOf(env.getLocalPort()));
+            template = template.replace("${proxy.protocol}", env.getProtocol());
             content = template;
         } catch (Exception e) {
             Tip.fail("生成v2ray配置文件内容失败");

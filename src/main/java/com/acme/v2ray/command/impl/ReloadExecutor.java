@@ -1,7 +1,6 @@
 package com.acme.v2ray.command.impl;
 
 import com.acme.v2ray.command.CommandExecutor;
-import com.acme.v2ray.command.CommandTip;
 import com.acme.v2ray.command.Context;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.StreamUtil;
@@ -30,7 +29,7 @@ public class ReloadExecutor implements CommandExecutor {
             if (oldContext != null) {
                 context.setSubUrl(oldContext.getSubUrl());
                 context.setServers(oldContext.getServers());
-                context.setServerId(oldContext.getServerId());
+                context.setServerName(oldContext.getServerName());
                 context.setEnvs(oldContext.getEnvs());
             }
             Tip.success("恢复归档成功:" + file.getAbsolutePath());

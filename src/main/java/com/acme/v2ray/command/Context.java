@@ -18,7 +18,7 @@ public class Context {
 
     private String subUrl;
 
-    private String serverId;
+    private String serverName;
 
     private List<V2rayServer> servers;
 
@@ -32,12 +32,12 @@ public class Context {
         this.subUrl = subUrl;
     }
 
-    public String getServerId() {
-        return serverId;
+    public String getServerName() {
+        return serverName;
     }
 
-    public void setServerId(String serverId) {
-        this.serverId = serverId;
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     public List<V2rayServer> getServers() {

@@ -6,6 +6,7 @@ import java.util.Map;
 public class Env {
     public static final Integer LOCAL_PORT = 1080;
     public static final String V2RAY_EXE_PATH = "v2ray";
+    public static final String DEFAULT_PROTOCOL = "socks";
 
 
     private Map<String, String> env;
@@ -29,6 +30,14 @@ public class Env {
         String s = env.get(EnvEnum.V2RAY_PATH.getKey());
         if (s == null) {
             return V2RAY_EXE_PATH;
+        }
+        return s;
+    }
+
+    public String getProtocol() {
+        String s = env.get(EnvEnum.PROXY_RROTOCOL.getKey());
+        if (s == null) {
+            return DEFAULT_PROTOCOL;
         }
         return s;
     }

@@ -7,7 +7,7 @@
   "inbound": {
     "port": ${local.port},
     "listen": "127.0.0.1",
-    "protocol": "socks",
+    "protocol": "${proxy.protocol}",
     "domainOverride": [
       "tls",
       "http"

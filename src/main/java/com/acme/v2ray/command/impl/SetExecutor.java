@@ -24,7 +24,7 @@ public class SetExecutor implements CommandExecutor {
         }
 
         String replace = commandBody.replace(editEnum.getKey(), "").trim();
-        if (!replace.startsWith("=") || replace.equals("")) {
+        if (!replace.startsWith("=") || replace.equals("=")) {
             Tip.fail("参数设置格式错误");
             return;
         }
