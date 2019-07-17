@@ -20,7 +20,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        if (args != null && args[0] != null) {
+        if (args != null && args.length > 0) {
             new LoadExecutor().execute(context, args[0]);
         }
 

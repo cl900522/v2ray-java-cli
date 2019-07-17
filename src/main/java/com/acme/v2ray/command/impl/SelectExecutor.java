@@ -61,14 +61,16 @@ public class SelectExecutor extends AbsExecutor {
             RuntimeUtil.killv2rayServer();
             Tip.success("检查并关闭遗留v2ray服务");
 
-            Tip.success("等待3s...");
-            Thread.sleep(3000);
-
             Env env = context.buildEnv();
             String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
-            RuntimeUtil.run(command, true);
+            new Thread() {
+                @Override
+                public void run() {
+                    RuntimeUtil.run(command, true);
+                }
+            }.start();
             context.setStarted(true);
 
             if (env.openSystemProxy()) {

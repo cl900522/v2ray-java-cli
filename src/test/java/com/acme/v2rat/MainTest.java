@@ -3,6 +3,8 @@ package com.acme.v2rat;
 import com.acme.v2ray.Main;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * @author: cdchenmingxuan
  * @date: 2019/7/8 20:02

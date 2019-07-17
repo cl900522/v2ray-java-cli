@@ -31,7 +31,7 @@ public class LoadExecutor implements CommandExecutor {
                 return;
             }
 
-            context.setConfigPath(commandBody);
+            context.setConfigPath(configPath);
 
             String bckConfigContent = StreamUtil.toString(new FileInputStream(file));
             Config bckConfig = JSON.parseObject(bckConfigContent, Config.class);

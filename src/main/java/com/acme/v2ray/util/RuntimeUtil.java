@@ -11,23 +11,23 @@ public class RuntimeUtil {
 
     public static void run(String command, Boolean backgroup) {
         try {
+            Process exec = null;
             switch (OSUtil.os) {
                 case WINDOWNS:
                     if (!backgroup) {
-                        Runtime.getRuntime().exec(command);
+                        exec = Runtime.getRuntime().exec(command);
                     } else {
-                        Runtime.getRuntime().exec(command + "&");
+                        exec = Runtime.getRuntime().exec(command + "&");
                     }
                     break;
                 default:
                     if (!backgroup) {
-                        Runtime.getRuntime().exec(command);
+                        exec = Runtime.getRuntime().exec(command);
                     } else {
-                        Runtime.getRuntime().exec("nohup " + command + "&");
+                        exec = Runtime.getRuntime().exec("nohup " + command + " &");
                     }
                     break;
             }
-            Runtime.getRuntime().exec("export no_proxy=localhost,127.0.0.1,192.168.0.0");
             Thread.sleep(1000);
         } catch (Exception e) {
             Tip.fail("运行命令失败：" + command);
