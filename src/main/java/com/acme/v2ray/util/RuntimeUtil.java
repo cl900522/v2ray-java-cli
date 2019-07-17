@@ -124,6 +124,7 @@ public class RuntimeUtil {
                     Runtime.getRuntime().exec("killall v2ray");
                     break;
             }
+            Thread.sleep(1000);
         } catch (Exception e) {
             Tip.fail("关闭V2ray服务失败：" + e.getMessage());
             e.printStackTrace();
