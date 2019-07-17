@@ -13,10 +13,14 @@ public class RuntimeUtil {
         try {
             switch (OSUtil.os) {
                 case WINDOWNS:
-                    Runtime.getRuntime().exec(command);
+                    if (!backgroup) {
+                        Runtime.getRuntime().exec(command);
+                    } else {
+                        Runtime.getRuntime().exec(command + "&");
+                    }
                     break;
                 default:
-                    if(backgroup) {
+                    if (!backgroup) {
                         Runtime.getRuntime().exec(command);
                     } else {
                         Runtime.getRuntime().exec("nohup " + command + "&");
@@ -30,6 +34,7 @@ public class RuntimeUtil {
             e.printStackTrace();
         }
     }
+
     public static void openSysProxy(String proxy, String url) {
         try {
             switch (OSUtil.os) {
