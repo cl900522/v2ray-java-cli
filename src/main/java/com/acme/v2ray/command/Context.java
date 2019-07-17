@@ -1,8 +1,11 @@
 package com.acme.v2ray.command;
 
+import com.acme.v2ray.domain.Config;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
+import com.acme.v2ray.domain.VmessServer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +19,17 @@ public class Context {
 
     private Boolean started = false;
 
+    private String configPath = ".config";
+
     private String subUrl;
 
-    private String serverName;
+    private String serverId;
 
-    private List<V2rayServer> servers;
+    private List<V2rayServer> servers = new ArrayList<>();
 
+    /**
+     * 变量
+     */
     private Map<String, String> envs = new HashMap<String, String>();
 
     public String getSubUrl() {
@@ -32,20 +40,22 @@ public class Context {
         this.subUrl = subUrl;
     }
 
-    public String getServerName() {
-        return serverName;
+    public String getServerId() {
+        return serverId;
     }
 
-    public void setServerName(String serverName) {
-        this.serverName = serverName;
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
     }
 
     public List<V2rayServer> getServers() {
         return servers;
     }
 
-    public void setServers(List<V2rayServer> servers) {
-        this.servers = servers;
+    public void addVmessServer(VmessServer vmessServer) {
+        V2rayServer v2rayServer = new V2rayServer(vmessServer);
+        v2rayServer.setIdx(this.servers.size());
+        this.servers.add(v2rayServer);
     }
 
     public Map<String, String> getEnvs() {
@@ -66,5 +76,28 @@ public class Context {
 
     public void setStarted(Boolean started) {
         this.started = started;
+    }
+
+    public String getConfigPath() {
+        return configPath;
+    }
+
+    public void setConfigPath(String configPath) {
+        this.configPath = configPath;
+    }
+
+    public void load(Config config) {
+        this.subUrl = config.getSubUrl();
+        this.serverIdx = config.getServerIdx();
+
+        this.servers = config.getServers();
+        if (this.servers == null) {
+            this.servers = new ArrayList<>();
+        }
+        this.envs = config.getEnvs();
+        if (this.envs == null) {
+            this.envs = new HashMap<>();
+        }
+
     }
 }

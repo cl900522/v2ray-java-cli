@@ -18,6 +18,7 @@ public class StatusExecutor implements CommandExecutor {
         Tip.success("订阅服务器地址：" + context.getSubUrl());
         Tip.success("可用服务器总数：" + (context.getServers() == null ? 0 : context.getServers().size()));
         Tip.success("代理状态：" + (context.getStarted() ? "【启动】" : "【关闭】"));
+        Tip.success("已选择服务器Id：" + context.getServers().get(context.getServerIdx()).toString());
 
         Tip.success("---------------------------------------");
         if (context.getStarted()) {

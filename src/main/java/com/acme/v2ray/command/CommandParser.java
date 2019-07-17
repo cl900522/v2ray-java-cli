@@ -26,11 +26,9 @@ public class CommandParser {
             executor = new SubExecutor();
         } else if (CommandTip.SAVE.getTip().equals(commandTip)) {
             executor = new SaveExecutor();
-        } else if (CommandTip.RELOAD.getTip().equals(commandTip)) {
-            executor = new ReloadExecutor();
         } else if (CommandTip.LOAD.getTip().equals(commandTip)) {
-            executor = new ReloadExecutor();
-        } else if (CommandTip.SELECT.getTip().equals(commandTip)) {
+            executor = new LoadExecutor();
+        } else if (CommandTip.START.getTip().equals(commandTip)) {
             executor = new SelectExecutor();
         } else if (CommandTip.LIST.getTip().equals(commandTip)) {
             executor = new ListExecutor();
@@ -44,6 +42,10 @@ public class CommandParser {
             executor = new SetExecutor();
         } else if (CommandTip.ENV.getTip().equals(commandTip)) {
             executor = new EnvExecutor();
+        } else if (CommandTip.STOP.getTip().equals(commandTip)) {
+            executor = new StopExecutor();
+        } else if (CommandTip.ADD.getTip().equals(commandTip)) {
+            executor = new AddExecutor();
         } else {
             executor = new HelpExecutor();
         }

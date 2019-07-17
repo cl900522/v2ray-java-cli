@@ -4,6 +4,7 @@ import com.acme.v2ray.command.Context;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.io.Tip;
+import com.acme.v2ray.util.RuntimeUtil;
 import com.acme.v2ray.util.StreamUtil;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
  * @description: v2rayjavacli
  */
 public class SelectExecutor extends AbsExecutor {
-    private static final String COMMAND_FORMAT = "nohup %s -config %s &";
+    private static final String COMMAND_FORMAT = "%s -config %s";
     private static Pattern pattern = Pattern.compile("[0-9]*");
 
     public void execute(Context context, String commandBody) {
@@ -48,7 +49,7 @@ public class SelectExecutor extends AbsExecutor {
         if (v2rayServer == null) {
             return;
         }
-        context.setServerName(String.format("%s - (%s:%s)", v2rayServer.getPs(), v2rayServer.getAdd(), v2rayServer.getPort()));
+        context.setServerIdx(i);
 
         String v2rayConfigPath = createV2rayConfigFile(context, v2rayServer);
         if (v2rayConfigPath == null || v2rayConfigPath.trim().equals("")) {
@@ -57,7 +58,7 @@ public class SelectExecutor extends AbsExecutor {
         }
 
         try {
-            killv2rayServer();
+            RuntimeUtil.killv2rayServer();
             Tip.success("检查并关闭遗留v2ray服务");
 
             Tip.success("等待3s...");
@@ -67,9 +68,14 @@ public class SelectExecutor extends AbsExecutor {
             String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
-            Runtime.getRuntime().exec(command);
-            Tip.success("本地代理服务启动成功");
+            RuntimeUtil.run(command, true);
             context.setStarted(true);
+
+            if (env.openSystemProxy()) {
+                RuntimeUtil.closeSysProxy();
+                RuntimeUtil.openSysProxy("socks", "127.0.0.1:" + env.getLocalPort());
+            }
+            Tip.success("本地代理服务启动成功");
         } catch (Exception e) {
             Tip.fail("启动服务失败：");
             context.setStarted(false);
@@ -84,9 +90,9 @@ public class SelectExecutor extends AbsExecutor {
         try {
             InputStream resourceInStream = this.getClass().getResourceAsStream("/v2ray-config.json.tpl");
             String template = StreamUtil.toString(resourceInStream);
-            template = template.replace("${server.port}", v2rayServer.getPort());
-            template = template.replace("${server.host}", v2rayServer.getAdd());
-            template = template.replace("${server.id}", v2rayServer.getId());
+            template = template.replace("${server.port}", v2rayServer.getPort().toString());
+            template = template.replace("${server.host}", v2rayServer.getHost());
+            template = template.replace("${server.id}", v2rayServer.getUserId());
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
             template = template.replace("${local.port}", String.valueOf(env.getLocalPort()));
@@ -103,7 +109,9 @@ public class SelectExecutor extends AbsExecutor {
         }
 
         try {
-            File configFile = new File(".servers/" + v2rayServer.getId() + ".json");
+            String pathname = ".servers/" + v2rayServer.getHost() + "-" + v2rayServer.getPort() + ".json";
+            pathname = pathname.replaceAll(":", "");
+            File configFile = new File(pathname);
             if (!configFile.exists()) {
                 File dir = new File(".servers/");
                 if (!dir.exists()) {
