@@ -5,67 +5,44 @@ package com.acme.v2ray.domain;
  * @date: 2019/7/8 19:57
  * @description: v2rayjavacli
  */
-public class V2rayServer {
-    private String add;
-    private String path;
-    private String ps;
-    private String port;
-    private String v;
+public class V2rayServer implements Comparable {
+    private static String SERVER_FORMAT = "【%d】%s - (%s:%s)";
+
+    public V2rayServer() {
+    }
+
+    public V2rayServer(VmessServer vmessServer) {
+        this.name = vmessServer.getPs();
+        this.host = vmessServer.getAdd();
+        this.port = Integer.valueOf(vmessServer.getPort());
+        this.userId = vmessServer.getId();
+        this.email = "t@t.tt";
+        this.net = vmessServer.getNet();
+    }
+
+    private Integer idx = 0;
+
+    private String name;
     private String host;
-    private String tls;
-    private String id;
+    private Integer port;
+    private String userId;
+    private String email;
     private String net;
-    private String type;
-    private String aid;
 
-    private String line;
-
-    public String getLine() {
-        return line;
+    public Integer getIdx() {
+        return idx;
     }
 
-    public void setLine(String line) {
-        this.line = line;
+    public void setIdx(Integer idx) {
+        this.idx = idx;
     }
 
-    public String getAdd() {
-        return add;
+    public String getName() {
+        return name;
     }
 
-    public void setAdd(String add) {
-        this.add = add;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getPs() {
-        return ps;
-    }
-
-    public void setPs(String ps) {
-        this.ps = ps;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getV() {
-        return v;
-    }
-
-    public void setV(String v) {
-        this.v = v;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getHost() {
@@ -76,20 +53,28 @@ public class V2rayServer {
         this.host = host;
     }
 
-    public String getTls() {
-        return tls;
+    public Integer getPort() {
+        return port;
     }
 
-    public void setTls(String tls) {
-        this.tls = tls;
+    public void setPort(Integer port) {
+        this.port = port;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNet() {
@@ -100,19 +85,27 @@ public class V2rayServer {
         this.net = net;
     }
 
-    public String getType() {
-        return type;
+    @Override
+    public String toString() {
+        return String.format(SERVER_FORMAT, idx, name, host, port);
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) {
+            return 1;
+        }
+        if (!(o instanceof V2rayServer)) {
+            return 1;
+        }
+        V2rayServer to = (V2rayServer) o;
+        if (this.idx == null) {
+            this.idx = 0;
+        }
+        if (to.idx == null) {
+            to.idx = 0;
+        }
 
-    public String getAid() {
-        return aid;
-    }
-
-    public void setAid(String aid) {
-        this.aid = aid;
+        return this.idx - to.idx;
     }
 }

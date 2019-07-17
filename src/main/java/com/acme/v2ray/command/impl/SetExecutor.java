@@ -37,7 +37,6 @@ public class SetExecutor implements CommandExecutor {
         }
         envs.put(editEnum.getKey(), value);
         Tip.success(editEnum.getKey() + "设置成功!");
-
     }
 
     private EnvEnum findEnvEnum(String commandBody) {

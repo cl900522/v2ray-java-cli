@@ -1,8 +1,8 @@
 package com.acme.v2ray.command.impl;
 
 import com.acme.v2ray.command.CommandExecutor;
-import com.acme.v2ray.command.CommandTip;
 import com.acme.v2ray.command.Context;
+import com.acme.v2ray.domain.Config;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.StreamUtil;
 import com.alibaba.fastjson.JSON;
@@ -25,13 +25,10 @@ public class ReloadExecutor implements CommandExecutor {
                 return;
             }
 
-            String oldContent = StreamUtil.toString(new FileInputStream(file));
-            Context oldContext = JSON.parseObject(oldContent, Context.class);
-            if (oldContext != null) {
-                context.setSubUrl(oldContext.getSubUrl());
-                context.setServers(oldContext.getServers());
-                context.setServerId(oldContext.getServerId());
-                context.setEnvs(oldContext.getEnvs());
+            String bckConfigContent = StreamUtil.toString(new FileInputStream(file));
+            Config bckConfig = JSON.parseObject(bckConfigContent, Config.class);
+            if (bckConfig != null) {
+                context.load(bckConfig);
             }
             Tip.success("恢复归档成功:" + file.getAbsolutePath());
         } catch (Exception e) {

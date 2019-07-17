@@ -1,6 +1,5 @@
 package com.acme.v2ray.command.impl;
 
-import com.acme.v2ray.command.CommandExecutor;
 import com.acme.v2ray.command.Context;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
@@ -49,7 +48,7 @@ public class SelectExecutor extends AbsExecutor {
         if (v2rayServer == null) {
             return;
         }
-        context.setServerId(v2rayServer.getId());
+        context.setServerIdx(i);
 
         String v2rayConfigPath = createV2rayConfigFile(context, v2rayServer);
         if (v2rayConfigPath == null || v2rayConfigPath.trim().equals("")) {
@@ -82,9 +81,9 @@ public class SelectExecutor extends AbsExecutor {
         try {
             InputStream resourceInStream = this.getClass().getResourceAsStream("/v2ray-config.json.tpl");
             String template = StreamUtil.toString(resourceInStream);
-            template = template.replace("${server.port}", v2rayServer.getPort());
-            template = template.replace("${server.host}", v2rayServer.getAdd());
-            template = template.replace("${server.id}", v2rayServer.getId());
+            template = template.replace("${server.port}", v2rayServer.getPort().toString());
+            template = template.replace("${server.host}", v2rayServer.getHost());
+            template = template.replace("${server.id}", v2rayServer.getUserId());
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
             template = template.replace("${local.port}", String.valueOf(env.getLocalPort()));
@@ -100,7 +99,7 @@ public class SelectExecutor extends AbsExecutor {
         }
 
         try {
-            File configFile = new File(".servers/" + v2rayServer.getId() + ".json");
+            File configFile = new File(".servers/" + v2rayServer.getHost() + "-" + v2rayServer.getPort() + ".json");
             if (!configFile.exists()) {
                 File dir = new File(".servers/");
                 if (!dir.exists()) {
