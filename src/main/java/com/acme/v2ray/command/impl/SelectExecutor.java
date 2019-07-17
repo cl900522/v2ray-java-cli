@@ -4,6 +4,7 @@ import com.acme.v2ray.command.Context;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.io.Tip;
+import com.acme.v2ray.util.RuntimeUtil;
 import com.acme.v2ray.util.StreamUtil;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
  * @description: v2rayjavacli
  */
 public class SelectExecutor extends AbsExecutor {
-    private static final String COMMAND_FORMAT = "nohup %s -config %s &";
+    private static final String COMMAND_FORMAT = "%s -config %s";
     private static Pattern pattern = Pattern.compile("[0-9]*");
 
     public void execute(Context context, String commandBody) {
@@ -57,7 +58,7 @@ public class SelectExecutor extends AbsExecutor {
         }
 
         try {
-            killv2rayServer();
+            RuntimeUtil.killv2rayServer();
             Tip.success("检查并关闭遗留v2ray服务");
 
             Env env = context.buildEnv();
@@ -65,8 +66,13 @@ public class SelectExecutor extends AbsExecutor {
             String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
-            Runtime.getRuntime().exec(command);
+            RuntimeUtil.run(command, true);
             context.setStarted(true);
+
+            if (env.openSystemProxy()) {
+                RuntimeUtil.closeSysProxy();
+                RuntimeUtil.openSysProxy("socks", "127.0.0.1:" + env.getLocalPort());
+            }
             Tip.success("本地代理服务启动成功");
         } catch (Exception e) {
             Tip.fail("启动服务失败：");

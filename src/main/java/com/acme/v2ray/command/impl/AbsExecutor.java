@@ -19,12 +19,17 @@ import java.util.List;
 public abstract class AbsExecutor implements CommandExecutor {
     private static final String VMESS_PRE = "vmess://";
 
-    protected  void sortServers(List<V2rayServer> v2rayServers) {
-        if(v2rayServers==null) {
+    /**
+     * 排序并重新设置编号
+     *
+     * @param v2rayServers
+     */
+    protected void sortServers(List<V2rayServer> v2rayServers) {
+        if (v2rayServers == null) {
             return;
         }
         Collections.sort(v2rayServers);
-        int i=0;
+        int i = 0;
         for (V2rayServer v2rayServer : v2rayServers) {
             v2rayServer.setIdx(i++);
         }
@@ -35,6 +40,9 @@ public abstract class AbsExecutor implements CommandExecutor {
             Tip.fail("没有服务器，请使用sub [url]更新订阅");
             return;
         }
+
+        /*显示前排序一下*/
+        sortServers(v2rayServers);
 
         for (V2rayServer v2rayServer : v2rayServers) {
             Tip.success(v2rayServer.toString());
@@ -67,17 +75,4 @@ public abstract class AbsExecutor implements CommandExecutor {
         return null;
     }
 
-    protected void killv2rayServer() {
-        try {
-            switch (OSUtil.os) {
-                case WINDOWNS:
-                    Runtime.getRuntime().exec("taskkill /im v2ray.exe /f");
-                    break;
-                default:
-                    Runtime.getRuntime().exec("killall v2ray");
-                    break;
-            }
-        } catch (Exception e) {
-        }
-    }
 }

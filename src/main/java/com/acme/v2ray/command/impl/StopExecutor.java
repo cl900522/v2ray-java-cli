@@ -2,6 +2,7 @@ package com.acme.v2ray.command.impl;
 
 import com.acme.v2ray.command.Context;
 import com.acme.v2ray.io.Tip;
+import com.acme.v2ray.util.RuntimeUtil;
 
 /**
  * @author: cdchenmingxuan
@@ -11,7 +12,7 @@ import com.acme.v2ray.io.Tip;
 public class StopExecutor extends AbsExecutor {
 
     public void execute(Context context, String commandBody) {
-        killv2rayServer();
+        RuntimeUtil.killv2rayServer();
         Tip.success("服务已关闭！");
     }
 

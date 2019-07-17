@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Env {
-    public static final Integer LOCAL_PORT = 1080;
+    public static final String LOCAL_PORT = "1080";
     public static final String V2RAY_EXE_PATH = "v2ray";
+    public static final String NO_OPEN = "false";
 
 
     private Map<String, String> env;
@@ -18,18 +19,27 @@ public class Env {
     }
 
     public Integer getLocalPort() {
-        String s = env.get(EnvEnum.LOCAL_PORT.getKey());
-        if (s == null) {
-            return LOCAL_PORT;
-        }
+        String s = getEnv(EnvEnum.LOCAL_PORT.getKey(), LOCAL_PORT);
         return Integer.valueOf(s);
     }
 
     public String getV2rayPath() {
-        String s = env.get(EnvEnum.V2RAY_PATH.getKey());
-        if (s == null) {
-            return V2RAY_EXE_PATH;
-        }
+        String s = getEnv(EnvEnum.V2RAY_PATH.getKey(), V2RAY_EXE_PATH);
         return s;
+    }
+
+    public Boolean openSystemProxy() {
+        String s = getEnv(EnvEnum.OPEN_SYSTEM_PROXY.getKey(), NO_OPEN);
+        return Boolean.valueOf(s);
+    }
+
+    private String getEnv(String key, String dfalut) {
+        String s = env.get(key);
+        if (s == null || s.trim().equals("")) {
+            env.put(key, dfalut);
+            return dfalut;
+        } else {
+            return s;
+        }
     }
 }
