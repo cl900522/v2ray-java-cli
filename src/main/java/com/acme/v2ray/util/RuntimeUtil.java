@@ -43,10 +43,32 @@ public class RuntimeUtil {
                 default:
                     switch (proxy) {
                         case "http":
+                        case "https":
+                            Runtime.getRuntime().exec("export all_proxy=http://" + url);
                             Runtime.getRuntime().exec("export ALL_PROXY=http://" + url);
+
+                            Runtime.getRuntime().exec("export http_proxy=http://" + url);
+                            Runtime.getRuntime().exec("export HTTP_PROXY=http://" + url);
+
+                            Runtime.getRuntime().exec("export https_proxy=http://" + url);
+                            Runtime.getRuntime().exec("export HTTPS_PROXY=http://" + url);
+
+                            Runtime.getRuntime().exec("export socks_proxy=http://" + url);
+                            Runtime.getRuntime().exec("export SOCKS_PROXY=http://" + url);
                             break;
                         case "socks":
-                            Runtime.getRuntime().exec("export ALL_PROXY=socks5://" + url);
+                        case "socks5":
+                            Runtime.getRuntime().exec("export all_proxy=socks://" + url);
+                            Runtime.getRuntime().exec("export ALL_PROXY=socks://" + url);
+
+                            Runtime.getRuntime().exec("export http_proxy=socks://" + url);
+                            Runtime.getRuntime().exec("export HTTP_PROXY=socks://" + url);
+
+                            Runtime.getRuntime().exec("export https_proxy=socks://" + url);
+                            Runtime.getRuntime().exec("export HTTPS_PROXY=socks://" + url);
+
+                            Runtime.getRuntime().exec("export socks_proxy=socks://" + url);
+                            Runtime.getRuntime().exec("export SOCKS_PROXY=socks://" + url);
                             break;
                         default:
                             Tip.fail("不支持的代理方式：" + proxy);
@@ -54,6 +76,7 @@ public class RuntimeUtil {
                     }
                     break;
             }
+            Runtime.getRuntime().exec("export NO_PROXY=localhost,127.0.0.1,192.168.0.0");
             Runtime.getRuntime().exec("export no_proxy=localhost,127.0.0.1,192.168.0.0");
             Thread.sleep(1000);
         } catch (Exception e) {
@@ -68,10 +91,20 @@ public class RuntimeUtil {
                 case WINDOWNS:
                     break;
                 default:
+                    Runtime.getRuntime().exec("unset all_proxy");
                     Runtime.getRuntime().exec("unset ALL_PROXY");
+
                     Runtime.getRuntime().exec("unset https_proxy");
+                    Runtime.getRuntime().exec("unset HTTPS_PROXY");
+
                     Runtime.getRuntime().exec("unset http_proxy");
+                    Runtime.getRuntime().exec("unset HTTP_PROXY");
+
+                    Runtime.getRuntime().exec("unset socks_proxy");
+                    Runtime.getRuntime().exec("unset SOCKS_PROXY");
+
                     Runtime.getRuntime().exec("unset no_proxy");
+                    Runtime.getRuntime().exec("unset NO_PROXY");
                     break;
             }
             Thread.sleep(1000);

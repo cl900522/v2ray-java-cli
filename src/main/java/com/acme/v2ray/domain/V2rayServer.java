@@ -14,7 +14,7 @@ public class V2rayServer implements Comparable {
     public V2rayServer(VmessServer vmessServer) {
         this.name = vmessServer.getPs();
         this.host = vmessServer.getAdd();
-        this.port = Integer.valueOf(vmessServer.getPort());
+        this.port = Integer.valueOf(vmessServer.getPort().trim());
         this.userId = vmessServer.getId();
         this.email = "t@t.tt";
         this.net = vmessServer.getNet();
