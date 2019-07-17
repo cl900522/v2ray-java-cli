@@ -19,7 +19,9 @@ import java.io.FileWriter;
 public class SaveExecutor implements CommandExecutor {
 
     public void execute(Context context, String commandBody) {
-        File file = new File(".config");
+        String configPath = context.getConfigPath();
+
+        File file = new File(configPath);
         try {
             if (!file.exists()) {
                 file.createNewFile();

@@ -12,7 +12,6 @@ public enum CommandTip {
     SUB("sub", "sub [url]", "重新刷新订阅url"),
     ADD("add", "add vmess://xxxx", "添加服务器"),
     SAVE("save", "save", "保存当前服务器信息到.config"),
-    RELOAD("reload", "reload", "从保存的.config文件恢复信息"),
     LOAD("load", "load", "从保存的.config文件恢复信息"),
     START("start", "start [index]", "选择服务器编号"),
     STOP("stop", "stop", "关闭代理服务"),

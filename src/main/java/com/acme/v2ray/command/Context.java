@@ -4,7 +4,6 @@ import com.acme.v2ray.domain.Config;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.domain.VmessServer;
-import sun.rmi.runtime.RuntimeUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +18,8 @@ import java.util.Map;
 public class Context {
 
     private Boolean started = false;
+
+    private String configPath = ".config";
 
     private String subUrl;
 
@@ -77,8 +78,18 @@ public class Context {
         this.started = started;
     }
 
+    public String getConfigPath() {
+        return configPath;
+    }
+
+    public void setConfigPath(String configPath) {
+        this.configPath = configPath;
+    }
+
     public void load(Config config) {
         this.subUrl = config.getSubUrl();
+        this.serverIdx = config.getServerIdx();
+
         this.servers = config.getServers();
         if (this.servers == null) {
             this.servers = new ArrayList<>();

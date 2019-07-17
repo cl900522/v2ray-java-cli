@@ -105,7 +105,9 @@ public class SelectExecutor extends AbsExecutor {
         }
 
         try {
-            File configFile = new File(".servers/" + v2rayServer.getHost() + "-" + v2rayServer.getPort() + ".json");
+            String pathname = ".servers/" + v2rayServer.getHost() + "-" + v2rayServer.getPort() + ".json";
+            pathname = pathname.replaceAll(":", "");
+            File configFile = new File(pathname);
             if (!configFile.exists()) {
                 File dir = new File(".servers/");
                 if (!dir.exists()) {

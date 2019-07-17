@@ -7,6 +7,7 @@ public class Env {
     public static final String LOCAL_PORT = "1080";
     public static final String V2RAY_EXE_PATH = "v2ray";
     public static final String NO_OPEN = "false";
+    public static final String NO_AUTO_START = "false";
 
 
     private Map<String, String> env;
@@ -29,7 +30,12 @@ public class Env {
     }
 
     public Boolean openSystemProxy() {
-        String s = getEnv(EnvEnum.OPEN_SYSTEM_PROXY.getKey(), NO_OPEN);
+        String s = getEnv(EnvEnum.SYSTEM_PROXY.getKey(), NO_OPEN);
+        return Boolean.valueOf(s);
+    }
+
+    public Boolean autoStart() {
+        String s = getEnv(EnvEnum.AUTO_START.getKey(), NO_AUTO_START);
         return Boolean.valueOf(s);
     }
 

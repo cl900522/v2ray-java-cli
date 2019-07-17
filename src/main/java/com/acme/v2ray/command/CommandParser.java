@@ -2,8 +2,6 @@ package com.acme.v2ray.command;
 
 import com.acme.v2ray.command.impl.*;
 
-import java.util.concurrent.Executor;
-
 /**
  * @author: cdchenmingxuan
  * @date: 2019/7/8 21:47
@@ -28,10 +26,8 @@ public class CommandParser {
             executor = new SubExecutor();
         } else if (CommandTip.SAVE.getTip().equals(commandTip)) {
             executor = new SaveExecutor();
-        } else if (CommandTip.RELOAD.getTip().equals(commandTip)) {
-            executor = new ReloadExecutor();
         } else if (CommandTip.LOAD.getTip().equals(commandTip)) {
-            executor = new ReloadExecutor();
+            executor = new LoadExecutor();
         } else if (CommandTip.START.getTip().equals(commandTip)) {
             executor = new SelectExecutor();
         } else if (CommandTip.LIST.getTip().equals(commandTip)) {

@@ -2,6 +2,7 @@ package com.acme.v2ray;
 
 import com.acme.v2ray.command.CommandParser;
 import com.acme.v2ray.command.Context;
+import com.acme.v2ray.command.impl.LoadExecutor;
 import com.acme.v2ray.io.Tip;
 
 import java.util.Scanner;
@@ -19,6 +20,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        if (args != null && args[0] != null) {
+            new LoadExecutor().execute(context, args[0]);
+        }
+
         try {
             do {
                 String input = waitInput(">", false);

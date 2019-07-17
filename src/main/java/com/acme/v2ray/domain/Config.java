@@ -21,12 +21,12 @@ public class Config {
         this.subUrl = context.getSubUrl();
         this.envs = context.getEnvs();
         this.servers = context.getServers();
-        this.serverIndex = context.getServerIdx();
+        this.serverIdx = context.getServerIdx();
     }
 
     private String subUrl;
 
-    private Integer serverIndex = 0;
+    private Integer serverIdx = 0;
 
     private List<V2rayServer> servers;
 
@@ -40,12 +40,12 @@ public class Config {
         this.subUrl = subUrl;
     }
 
-    public Integer getServerIndex() {
-        return serverIndex;
+    public Integer getServerIdx() {
+        return serverIdx;
     }
 
-    public void setServerIndex(Integer serverIndex) {
-        this.serverIndex = serverIndex;
+    public void setServerIdx(Integer serverIdx) {
+        this.serverIdx = serverIdx;
     }
 
     public List<V2rayServer> getServers() {
