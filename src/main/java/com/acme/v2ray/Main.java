@@ -24,14 +24,41 @@ public class Main {
             new LoadExecutor().execute(context, args[0]);
         }
 
+
         try {
-            do {
-                String input = waitInput(">", false);
-                parser.parse(context, input);
-            } while (true);
+            if (interactAble()) {
+                Tip.common("不可交换，进入后台模式运行");
+                do {
+                    try {
+                        synchronized (scanner) {
+                            scanner.wait();
+                        }
+                    } catch (Exception e1) {
+                    } finally {
+                        scanner.notify();
+                    }
+                } while (true);
+            } else {
+                do {
+                    String input = waitInput(">", false);
+                    parser.parse(context, input);
+                } while (true);
+            }
+        } catch (Exception e) {
+            Tip.fail("系统错误:" + e.getMessage());
         } finally {
             scanner.close();
         }
+    }
+
+    private static Boolean interactAble() {
+        try {
+            if (System.in.available() == 0) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     public static String waitInput(String tip, Boolean newLine) {
