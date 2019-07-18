@@ -1,6 +1,6 @@
 # 工具说明
 
-此工具是为了更加方便的在linux环境下使v2ray客户端而开发的。
+此工具是为了更加方便的在linux环境下使v2ray客户端而开发的。此工具是对v2ray-core的包装，使其更便于linux环境使用，所以需要依赖v2Ray-core，请在https://github.com/v2ray/v2ray-core/releases/下载最新版本
 
 # 使用方法 
 
