@@ -4,10 +4,9 @@ import com.acme.v2ray.command.CommandExecutor;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.domain.VmessServer;
 import com.acme.v2ray.io.Tip;
-import com.acme.v2ray.util.OSUtil;
 import com.alibaba.fastjson.JSON;
-import sun.misc.BASE64Decoder;
 
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,8 +64,8 @@ public abstract class AbsExecutor implements CommandExecutor {
 
     protected String parseBase64(String subContent) {
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] decoderBytes = decoder.decodeBuffer(subContent);
+            Base64.Decoder base64Decoder = Base64.getDecoder();
+            byte[] decoderBytes = base64Decoder.decode(subContent);
             return new String(decoderBytes);
         } catch (Exception e) {
             Tip.fail("解析订阅的返回数据失败：" + subContent);
