@@ -4,7 +4,7 @@
 
 # 使用方法 
 
-1. 安装oracle-jre 1.8或者更高版本，其中使用到Base64解密方法，依赖于oracle-jre，openjdk没有该方法
+1. 安装oracle-jre 或者openjdk 1.8或者更高版本
 
 2. 使用java -jar v2ray-java-cli-x.x.jar 运行即可
 
