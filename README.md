@@ -9,6 +9,7 @@
 2. 使用java -jar v2ray-java-cli-x.x.jar 运行即可
 
 3. 在命令行中使用以下命令设置环境变量
+
 ```shell
 # 设置v2ray的运行地址，默认情况下你可以将v2ray可执行文件的路径加入PATH环境变量即可
 > set v2ray.path=/path/to/v2ray
@@ -36,8 +37,8 @@
 > save
 ``` 
 
-
 5. 添加服务器
+
 ``` shell
 # 添加服务器
 > add vmess://vmess-server-url
@@ -47,15 +48,20 @@
 ```
 
 6. 启动服务器
+
 ```
 # 显示服务器列表
 > list
 
 # 启动到12编号的服务器代理
 > start 12
+
+# 保存配置选项
+> save
 ```
 
 7. 其他
+
 ```
 # 载入保存的配置文件，默认.config
 > load
@@ -65,6 +71,17 @@
 
 # 退出命令行(v2ray的代理服务也会自动关闭)
 > exit
+
+```
+
+8. 自动启动服务器
+
+建议你第一次启动后，设置自动启动参数auto.start=true，使用save命令保存配置（所有配置都已保存在pwd目录的.config文件中）
+
+在开机自启动脚本增加一下命令就可以自动载入配置文件中服务器列表和选择的服务器
+```
+
+java -jar v2ray-java-cli-x.x.jar /path/to/your/.config/file
 
 ```
 
