@@ -1,6 +1,6 @@
 # 工具说明
 
-此工具是为了更加方便的在linux环境下使v2ray客户端而开发的。此工具是对v2ray-core的包装，使其更便于linux环境使用，所以需要依赖v2Ray-core，请在https://github.com/v2ray/v2ray-core/releases/下载最新版本
+此工具是为了更加方便的在linux环境下使v2ray客户端而开发的。此工具是对v2ray-core的包装，使其更便于linux环境使用，所以需要依赖v2Ray-core，请在https://github.com/v2ray/v2ray-core/releases/ 下载最新版本
 
 # 使用方法 
 
@@ -75,7 +75,7 @@
 ```
 
 8. 自动启动服务器
-
+````````
 建议你第一次启动后，设置自动启动参数auto.start=true，使用save命令保存配置（所有配置都已保存在pwd目录的.config文件中）
 
 在开机自启动脚本增加一下命令就可以自动载入配置文件中服务器列表和选择的服务器
@@ -90,7 +90,7 @@ java -jar v2ray-java-cli-x.x.jar /path/to/your/.config/file
 # 遗留问题
 * 关闭java后，v2ray服务也自动关闭了
 
-需要一直开启java的命令行
+需要一直开启java的命令行，下一步准备使用python或者gtk重新编写
 
 * 无法自动开启系统代理，java无法设置系统环境变量
 
