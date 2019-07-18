@@ -81,16 +81,13 @@
 在开机自启动脚本增加一下命令就可以自动载入配置文件中服务器列表和选择的服务器
 ```
 
-java -jar v2ray-java-cli-x.x.jar /path/to/your/.config/file
+nohup java -jar v2ray-java-cli-x.x.jar /path/to/your/.config/file &
 
 ```
 
 
 
 # 遗留问题
-* 关闭java后，v2ray服务也自动关闭了
-
-需要一直开启java的命令行，下一步准备使用python或者gtk重新编写
 
 * 无法自动开启系统代理，java无法设置系统环境变量
 
