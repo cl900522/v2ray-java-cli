@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * @date: 2019/7/8 21:26
  * @description: v2rayjavacli
  */
-public class SelectExecutor extends AbsExecutor {
+public class StartExecutor extends AbsExecutor {
     private static final String COMMAND_FORMAT = "%s -config %s";
     private static Pattern pattern = Pattern.compile("[0-9]*");
 

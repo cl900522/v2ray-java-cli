@@ -43,7 +43,7 @@ public class LoadExecutor implements CommandExecutor {
             /*根据配置判断是否需要自动启动*/
             Env evn = context.buildEnv();
             if (evn.autoStart() && context.getServerIdx() != null) {
-                new SelectExecutor().execute(context, context.getServerIdx().toString());
+                new StartExecutor().execute(context, context.getServerIdx().toString());
             }
         } catch (Exception e) {
             Tip.fail("恢复归档失败");

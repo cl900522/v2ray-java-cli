@@ -29,7 +29,7 @@ public class CommandParser {
         } else if (CommandTip.LOAD.getTip().equals(commandTip)) {
             executor = new LoadExecutor();
         } else if (CommandTip.START.getTip().equals(commandTip)) {
-            executor = new SelectExecutor();
+            executor = new StartExecutor();
         } else if (CommandTip.LIST.getTip().equals(commandTip)) {
             executor = new ListExecutor();
         } else if (CommandTip.EXIT.getTip().equals(commandTip)) {
