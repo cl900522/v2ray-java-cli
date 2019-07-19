@@ -5,6 +5,7 @@ import com.acme.v2ray.command.Context;
 import com.acme.v2ray.command.impl.LoadExecutor;
 import com.acme.v2ray.io.Tip;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -26,24 +27,22 @@ public class Main {
 
 
         try {
-            if (interactAble()) {
-                Tip.common("不可交换，进入后台模式运行");
-                do {
-                    try {
-                        synchronized (scanner) {
-                            scanner.wait();
-                        }
-                    } catch (Exception e1) {
-                    } finally {
-                        scanner.notify();
+            do {
+                String input = waitInput(">", false);
+                parser.parse(context, input);
+            } while (true);
+        } catch (NoSuchElementException e) {
+            Tip.common("不可交换，进入后台模式运行");
+            do {
+                try {
+                    synchronized (scanner) {
+                        scanner.wait();
                     }
-                } while (true);
-            } else {
-                do {
-                    String input = waitInput(">", false);
-                    parser.parse(context, input);
-                } while (true);
-            }
+                } catch (Exception e1) {
+                } finally {
+                    scanner.notify();
+                }
+            } while (true);
         } catch (Exception e) {
             Tip.fail("系统错误:" + e.getMessage());
         } finally {
