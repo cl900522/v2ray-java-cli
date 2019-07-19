@@ -6,7 +6,7 @@
   },
   "inbound": {
     "port": ${local.port},
-    "listen": "0.0.0.0",
+    "listen": "${bind.ip}",
     "protocol": "${proxy.protocol}",
     "domainOverride": [
       "tls",

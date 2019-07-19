@@ -1,10 +1,10 @@
 package com.acme.v2ray.domain;
 
 public enum EnvEnum {
-    LOCAL_PORT("local.port", "本地代理端口"),
-    SYSTEM_PROXY("system.proxy", "是否开启系统代理"),
-    AUTO_START("auto.start", "是否自动启动v2ray服务"),
-    PROXY_RROTOCOL("proxy.protocol", "代理协议"),
+    BIND_IP("bind.ip", "绑定的网卡ip 0.0.0.0"),
+    LOCAL_PORT("local.port", "本地代理端口 1080"),
+    AUTO_START("auto.start", "是否自动启动v2ray服务 true|false"),
+    PROXY_RROTOCOL("proxy.protocol", "代理协议 socks|http"),
     V2RAY_PATH("v2ray.path", "v2ray可执行文件路径");
 
 

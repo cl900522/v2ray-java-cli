@@ -25,14 +25,13 @@ public class Main {
             new LoadExecutor().execute(context, args[0]);
         }
 
-
         try {
             do {
                 String input = waitInput(">", false);
                 parser.parse(context, input);
             } while (true);
         } catch (NoSuchElementException e) {
-            Tip.common("不可交换，进入后台模式运行");
+            Tip.common("不可命令交互，进入后台模式运行");
             do {
                 try {
                     synchronized (scanner) {
@@ -50,15 +49,6 @@ public class Main {
         }
     }
 
-    private static Boolean interactAble() {
-        try {
-            if (System.in.available() == 0) {
-                return true;
-            }
-        } catch (Exception e) {
-        }
-        return false;
-    }
 
     public static String waitInput(String tip, Boolean newLine) {
         if (newLine != null && newLine) {

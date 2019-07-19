@@ -6,7 +6,7 @@ import java.util.Map;
 public class Env {
     public static final String LOCAL_PORT = "1080";
     public static final String V2RAY_EXE_PATH = "v2ray";
-    public static final String NO_OPEN = "false";
+    public static final String GLOBAL_IP = "0.0.0.0";
     public static final String NO_AUTO_START = "false";
     public static final String DEFAULT_PROTOCOL = "socks";
 
@@ -30,9 +30,9 @@ public class Env {
         return s;
     }
 
-    public Boolean openSystemProxy() {
-        String s = getEnv(EnvEnum.SYSTEM_PROXY.getKey(), NO_OPEN);
-        return Boolean.valueOf(s);
+    public String getBindIp() {
+        String s = getEnv(EnvEnum.BIND_IP.getKey(), GLOBAL_IP);
+        return s;
     }
 
     public Boolean autoStart() {
@@ -51,10 +51,7 @@ public class Env {
     }
 
     public String getProtocol() {
-        String s = env.get(EnvEnum.PROXY_RROTOCOL.getKey());
-        if (s == null) {
-            return DEFAULT_PROTOCOL;
-        }
+        String s = getEnv(EnvEnum.PROXY_RROTOCOL.getKey(), DEFAULT_PROTOCOL);
         return s;
     }
 }

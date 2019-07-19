@@ -65,18 +65,10 @@ public class StartExecutor extends AbsExecutor {
             String command = String.format(COMMAND_FORMAT, env.getV2rayPath(), v2rayConfigPath);
             Tip.common("运行：" + command + "\n");
 
-            new Thread() {
-                @Override
-                public void run() {
-                    RuntimeUtil.run(command, true);
-                }
-            }.start();
+
+            RuntimeUtil.run(command, true);
             context.setStarted(true);
 
-            if (env.openSystemProxy()) {
-                RuntimeUtil.closeSysProxy();
-                RuntimeUtil.openSysProxy("socks", "127.0.0.1:" + env.getLocalPort());
-            }
             Tip.success("本地代理服务启动成功");
         } catch (Exception e) {
             Tip.fail("启动服务失败：");
@@ -94,6 +86,7 @@ public class StartExecutor extends AbsExecutor {
             String template = StreamUtil.toString(resourceInStream);
             template = template.replace("${server.port}", v2rayServer.getPort().toString());
             template = template.replace("${server.host}", v2rayServer.getHost());
+            template = template.replace("${bind.ip}", env.getBindIp());
             template = template.replace("${server.id}", v2rayServer.getUserId());
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
