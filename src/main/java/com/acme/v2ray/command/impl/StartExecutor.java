@@ -90,8 +90,8 @@ public class StartExecutor extends AbsExecutor {
             template = template.replace("${server.id}", v2rayServer.getUserId());
             template = template.replace("${server.email}", "t@t.tt");
             template = template.replace("${server.network}", v2rayServer.getNet());
-            template = template.replace("${local.port}", String.valueOf(env.getLocalPort()));
-            template = template.replace("${proxy.protocol}", env.getProtocol());
+            template = template.replace("${local.socksPort}", String.valueOf(env.getSocksPort()));
+            template = template.replace("${local.httpPort}", String.valueOf(env.getHttpPort()));
             content = template;
         } catch (Exception e) {
             Tip.fail("生成v2ray配置文件内容失败");

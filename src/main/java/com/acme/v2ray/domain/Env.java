@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Env {
-    public static final String LOCAL_PORT = "1080";
+    public static final String LOCAL_SOCKS_PORT = "1080";
+    public static final String LOCAL_HTTP_PORT = "1081";
     public static final String V2RAY_EXE_PATH = "v2ray";
     public static final String GLOBAL_IP = "0.0.0.0";
     public static final String NO_AUTO_START = "false";
-    public static final String DEFAULT_PROTOCOL = "socks";
 
 
     private Map<String, String> env;
@@ -20,8 +20,13 @@ public class Env {
         this.env = env;
     }
 
-    public Integer getLocalPort() {
-        String s = getEnv(EnvEnum.LOCAL_PORT.getKey(), LOCAL_PORT);
+    public Integer getSocksPort() {
+        String s = getEnv(EnvEnum.LOCAL_SOCKS_PORT.getKey(), LOCAL_SOCKS_PORT);
+        return Integer.valueOf(s);
+    }
+
+    public Integer getHttpPort() {
+        String s = getEnv(EnvEnum.LOCAL_HTTP_PORT.getKey(), LOCAL_HTTP_PORT);
         return Integer.valueOf(s);
     }
 
@@ -48,10 +53,5 @@ public class Env {
         } else {
             return s;
         }
-    }
-
-    public String getProtocol() {
-        String s = getEnv(EnvEnum.PROXY_RROTOCOL.getKey(), DEFAULT_PROTOCOL);
-        return s;
     }
 }

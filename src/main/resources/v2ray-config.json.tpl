@@ -1,25 +1,42 @@
 {
   "log": {
-    "access": "",
-    "error": "",
+    "access": "access.log",
+    "error": "error.log",
     "loglevel": "warning"
   },
-  "inbound": {
-    "port": ${local.port},
+  "inbounds": [{
+    "port": ${local.socksPort},
     "listen": "${bind.ip}",
-    "protocol": "${proxy.protocol}",
-    "domainOverride": [
-      "tls",
-      "http"
-    ],
+    "protocol": "socks",
+    "sniffing": {
+      "enabled": false,
+      "destOverride": ["http", "tls"]
+    },
     "settings": {
       "auth": "noauth",
       "udp": true,
       "ip": "127.0.0.1",
       "clients": null
     },
+    "tag": "in1",
     "streamSettings": null
-  },
+  }, {
+    "port": ${local.httpPort},
+    "listen": "${bind.ip}",
+    "protocol": "http",
+    "sniffing": {
+      "enabled": false,
+      "destOverride": ["http", "tls"]
+    },
+    "settings": {
+      "auth": "noauth",
+      "udp": true,
+      "ip": "127.0.0.1",
+      "clients": null
+    },
+    "tag": "in2",
+    "streamSettings": null
+  }],
   "outbound": {
     "tag": "agentout",
     "protocol": "vmess",

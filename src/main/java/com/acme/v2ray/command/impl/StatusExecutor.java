@@ -23,8 +23,9 @@ public class StatusExecutor implements CommandExecutor {
         if (context.getStarted()) {
             Env env = context.buildEnv();
             Tip.success("已选择服务器名称：" + context.getServers().get(context.getServerIdx()).toString());
-            Tip.success("代理端口：" + env.getLocalPort());
-            Tip.success("代理协议：" + env.getProtocol());
+            Tip.success("代理socks端口：" + env.getSocksPort());
+            Tip.success("代理http端口：" + env.getHttpPort());
+
         }
 
     }
