@@ -6,7 +6,7 @@
 
     <groupId>com.acme</groupId>
     <artifactId>v2ray-java-cli</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <properties>
