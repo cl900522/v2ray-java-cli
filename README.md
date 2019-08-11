@@ -20,8 +20,11 @@
 # 设置代理的协议，默认socks
 > set proxoy.protocal=socks
 
-# 设置本地端口,默认1080
-> set local.port=1080
+# 设置socks5端口,默认1080
+> set local.socksPort=1080
+
+# 设置http代理端口,默认1081
+> set local.httpPort=1081
 
 # 保存配置
 > save
@@ -69,7 +72,7 @@
 # 关闭服务
 > close
 
-# 退出命令行(v2ray的代理服务也会自动关闭)
+# 退出命令行（v2ray服务继续运行，可以使用close命令关闭）
 > exit
 
 ```
