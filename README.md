@@ -33,8 +33,11 @@
 4. 订阅服务，设置购买的v2ray服务供应商提供的订阅更新地址
 
 ```shell
-#设置订阅,更新成功后会自动
+#设置订阅,更新成功后会自动，默认为 default分组
 > sub http://url/to/your/sub
+
+#设置订阅并将订阅的服务器归类为mygroup分组
+> sub mygroup http://url/to/your/sub
 
 # 保存服务器信息和配置
 > save
@@ -43,7 +46,7 @@
 5. 添加服务器
 
 ``` shell
-# 添加服务器
+# 添加服务器，归类为manual分组
 > add vmess://vmess-server-url
 
 # 保存服务器信息和配置
@@ -63,7 +66,23 @@
 > save
 ```
 
-7. 其他
+7. 移除服务器或分组
+```
+#删除所有服务器和分组
+> del *
+
+#删除mygroup的分组订阅以及服务器
+> del mygroup
+
+#删除编号12的服务器
+> del 12
+
+#循环删除
+> del 12 mygroup1 mygroup2 
+
+```
+
+8. 其他
 
 ```
 # 载入保存的配置文件，默认.config
@@ -87,7 +106,6 @@
 nohup java -jar v2ray-java-cli-x.x.jar /path/to/your/.config/file &
 
 ```
-
 
 
 # 遗留问题
