@@ -6,6 +6,8 @@ package com.acme.v2ray.domain;
  * @description: v2rayjavacli
  */
 public class VmessServer {
+    private String group;
+
     private String add;
     private String path;
     private String ps;
@@ -19,6 +21,14 @@ public class VmessServer {
     private String aid;
 
     private String line;
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     public String getLine() {
         return line;

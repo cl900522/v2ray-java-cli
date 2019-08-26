@@ -4,24 +4,31 @@ import com.acme.v2ray.domain.Config;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.domain.VmessServer;
+import com.acme.v2ray.util.StringUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author: cdchenmingxuan
  * @date: 2019/7/8 21:29
  * @description: v2rayjavacli
  */
+@Getter
+@Setter
 public class Context {
 
     private Boolean started = false;
 
     private String configPath = ".config";
 
-    private String subUrl;
+    private Map<String, String> subUrlMap = new HashMap<>();
 
     private Integer serverIdx;
 
@@ -32,62 +39,23 @@ public class Context {
      */
     private Map<String, String> envs = new HashMap<String, String>();
 
-    public String getSubUrl() {
-        return subUrl;
+    public void putSubUrl(String group, String url) {
+        this.subUrlMap.put(group, url);
     }
 
-    public void setSubUrl(String subUrl) {
-        this.subUrl = subUrl;
-    }
-
-    public Integer getServerIdx() {
-        return serverIdx;
-    }
-
-    public void setServerIdx(Integer serverId) {
-        this.serverIdx = serverId;
-    }
-
-    public List<V2rayServer> getServers() {
-        return servers;
-    }
-
-    public void addVmessServer(VmessServer vmessServer) {
+    public void addVmessServer(VmessServer vmessServer, String group) {
         V2rayServer v2rayServer = new V2rayServer(vmessServer);
+        v2rayServer.setGroup(group);
         v2rayServer.setIdx(this.servers.size());
         this.servers.add(v2rayServer);
-    }
-
-    public Map<String, String> getEnvs() {
-        return envs;
-    }
-
-    public void setEnvs(Map<String, String> envs) {
-        this.envs = envs;
     }
 
     public Env buildEnv() {
         return new Env(envs);
     }
 
-    public Boolean getStarted() {
-        return started;
-    }
-
-    public void setStarted(Boolean started) {
-        this.started = started;
-    }
-
-    public String getConfigPath() {
-        return configPath;
-    }
-
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
-
     public void load(Config config) {
-        this.subUrl = config.getSubUrl();
+        this.subUrlMap = config.getSubUrlMap() == null ? new HashMap<>() : config.getSubUrlMap();
         this.serverIdx = config.getServerIdx();
 
         this.servers = config.getServers();
@@ -99,5 +67,16 @@ public class Context {
             this.envs = new HashMap<>();
         }
 
+    }
+
+    public void clearGroup(String group) {
+        if (StringUtil.isBlank(group)) {
+            return;
+        }
+        if (servers == null || servers.isEmpty()) {
+            return;
+        }
+        Stream<V2rayServer> stream = servers.stream();
+        servers = stream.filter((server) -> !group.equals(server.getGroup())).collect(Collectors.toList());
     }
 }

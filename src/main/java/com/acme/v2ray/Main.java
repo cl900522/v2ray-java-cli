@@ -44,6 +44,7 @@ public class Main {
             } while (true);
         } catch (Exception e) {
             Tip.fail("系统错误:" + e.getMessage());
+            e.printStackTrace();
         } finally {
             scanner.close();
         }

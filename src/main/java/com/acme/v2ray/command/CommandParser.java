@@ -9,7 +9,6 @@ import com.acme.v2ray.command.impl.*;
  */
 public class CommandParser {
     public void parse(Context context, String commandLine) {
-        commandLine = commandLine.trim();
         int i = commandLine.indexOf(" ");
 
         String commandTip = null, commandBody = null;
@@ -46,6 +45,8 @@ public class CommandParser {
             executor = new StopExecutor();
         } else if (CommandTip.ADD.getTip().equals(commandTip)) {
             executor = new AddExecutor();
+        } else if (CommandTip.DEL.getTip().equals(commandTip)) {
+            executor = new DelExecutor();
         } else {
             executor = new HelpExecutor();
         }

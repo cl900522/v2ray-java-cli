@@ -1,9 +1,9 @@
 package com.acme.v2ray.command.impl;
 
 import com.acme.v2ray.command.Context;
-import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.domain.VmessServer;
 import com.acme.v2ray.io.Tip;
+import com.acme.v2ray.util.StringUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -16,6 +16,7 @@ import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: cdchenmingxuan
@@ -27,15 +28,35 @@ public class SubExecutor extends AbsExecutor {
 
     public void execute(Context context, String commandBody) {
         String subUrl = commandBody;
-        if (subUrl == null || subUrl.trim().equals("")) {
-            subUrl = context.getSubUrl();
+        String group = "default";
+        if (StringUtil.isBlank(subUrl)) {
+            boolean empty = context.getSubUrlMap().isEmpty();
+            if (empty) {
+                Tip.fail("请提供订阅的服务器url");
+                return;
+            } else {
+                for (Map.Entry<String, String> urlMap : context.getSubUrlMap().entrySet()) {
+                    subUrl(context, urlMap.getKey(), urlMap.getValue());
+                }
+            }
+        } else {
+            boolean contains = subUrl.contains(" ");
+            if (contains) {
+                String[] split = subUrl.split(" ");
+                group = split[0];
+                subUrl = split[1].trim();
+            }
+            if (StringUtil.isBlank(subUrl)) {
+                Tip.fail("请提供订阅的服务器url");
+                return;
+            }
+            subUrl(context, group, subUrl);
         }
 
-        if (subUrl == null || subUrl.trim().equals("")) {
-            Tip.fail("请提供订阅的服务器url");
-            return;
-        }
+        showServers(context.getServers());
+    }
 
+    private void subUrl(Context context, String group, String subUrl) {
         String subContent = getSub(subUrl);
         String content = parseBase64(subContent);
 
@@ -45,12 +66,12 @@ public class SubExecutor extends AbsExecutor {
             return;
         }
 
+        context.clearGroup(group);
         for (VmessServer vmessServer : vmessServers) {
-            context.addVmessServer(vmessServer);
+            context.addVmessServer(vmessServer, group);
         }
 
-        showServers(context.getServers());
-        context.setSubUrl(subUrl);
+        context.putSubUrl(group, subUrl);
     }
 
     private List<VmessServer> parseContentToServers(String content) {
@@ -59,7 +80,7 @@ public class SubExecutor extends AbsExecutor {
             BufferedReader inputStream = new BufferedReader(new StringReader(content));
             String line = null;
             while ((line = inputStream.readLine()) != null) {
-                if (line.trim().equals("")) {
+                if (StringUtil.isBlank(line)) {
                     continue;
                 }
 

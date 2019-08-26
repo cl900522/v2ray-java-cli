@@ -1,5 +1,7 @@
 package com.acme.v2ray.domain;
 
+import com.acme.v2ray.util.StringUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public class Env {
 
     private String getEnv(String key, String dfalut) {
         String s = env.get(key);
-        if (s == null || s.trim().equals("")) {
+        if (StringUtil.isBlank(s)) {
             env.put(key, dfalut);
             return dfalut;
         } else {

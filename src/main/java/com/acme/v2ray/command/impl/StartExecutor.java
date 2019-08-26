@@ -6,6 +6,7 @@ import com.acme.v2ray.domain.V2rayServer;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.RuntimeUtil;
 import com.acme.v2ray.util.StreamUtil;
+import com.acme.v2ray.util.StringUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +30,7 @@ public class StartExecutor extends AbsExecutor {
             return;
         }
 
-        if (commandBody == null || commandBody.trim().equals("")) {
+        if (StringUtil.isBlank(commandBody)) {
             Tip.fail("请选择服务器编号：[0-" + (v2rayServers.size() - 1) + "]");
             return;
         }
@@ -52,7 +53,7 @@ public class StartExecutor extends AbsExecutor {
         context.setServerIdx(i);
 
         String v2rayConfigPath = createV2rayConfigFile(context, v2rayServer);
-        if (v2rayConfigPath == null || v2rayConfigPath.trim().equals("")) {
+        if (StringUtil.isBlank(v2rayConfigPath)) {
             Tip.fail("生成启动v2ray服务配置文件失败");
             return;
         }
@@ -99,7 +100,7 @@ public class StartExecutor extends AbsExecutor {
             return null;
         }
 
-        if (content == null || content.trim().equals("")) {
+        if (StringUtil.isBlank(content)) {
             return null;
         }
 

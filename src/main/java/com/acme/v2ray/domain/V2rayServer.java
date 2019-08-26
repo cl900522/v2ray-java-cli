@@ -6,7 +6,7 @@ package com.acme.v2ray.domain;
  * @description: v2rayjavacli
  */
 public class V2rayServer implements Comparable {
-    private static String SERVER_FORMAT = "【%d】%s - (%s:%s)";
+    private static String SERVER_FORMAT = "【%d】%s:[%s] - (%s:%s)";
 
     public V2rayServer() {
     }
@@ -22,12 +22,21 @@ public class V2rayServer implements Comparable {
 
     private Integer idx = 0;
 
+    private String group;
     private String name;
     private String host;
     private Integer port;
     private String userId;
     private String email;
     private String net;
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     public Integer getIdx() {
         return idx;
@@ -87,7 +96,7 @@ public class V2rayServer implements Comparable {
 
     @Override
     public String toString() {
-        return String.format(SERVER_FORMAT, idx, name, host, port);
+        return String.format(SERVER_FORMAT, idx, name, group == null ? "" : group, host, port);
     }
 
     @Override

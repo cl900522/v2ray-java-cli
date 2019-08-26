@@ -1,9 +1,6 @@
-package com.acme.v2rat;
+package com.acme.v2ray;
 
-import com.acme.v2ray.Main;
 import org.junit.Test;
-
-import java.io.IOException;
 
 /**
  * @author: cdchenmingxuan

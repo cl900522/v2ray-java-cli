@@ -6,6 +6,7 @@ import com.acme.v2ray.domain.Config;
 import com.acme.v2ray.domain.Env;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.StreamUtil;
+import com.acme.v2ray.util.StringUtil;
 import com.alibaba.fastjson.JSON;
 
 import java.io.File;
@@ -20,7 +21,7 @@ public class LoadExecutor implements CommandExecutor {
 
     public void execute(Context context, String commandBody) {
         String configPath = commandBody;
-        if (commandBody == null || commandBody.trim().equals("")) {
+        if (StringUtil.isNotBlank(commandBody)) {
             configPath = context.getConfigPath();
         }
 
