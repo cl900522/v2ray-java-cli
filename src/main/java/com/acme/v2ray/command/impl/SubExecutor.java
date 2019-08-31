@@ -9,6 +9,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
@@ -101,6 +102,8 @@ public class SubExecutor extends AbsExecutor {
         try {
             HttpPost httpPost = new HttpPost();
             httpPost.setURI(URI.create(url));
+            httpPost.addHeader(new BasicHeader("content-type","text/html; charset=UTF-8"));
+            httpPost.addHeader(new BasicHeader("user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"));
             httpresponse = httpclient.execute(httpPost);
 
             if (httpresponse.getStatusLine().getStatusCode() != HTTP_SUCCESS) {
