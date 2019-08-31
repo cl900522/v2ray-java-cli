@@ -21,7 +21,7 @@ public class LoadExecutor implements CommandExecutor {
 
     public void execute(Context context, String commandBody) {
         String configPath = commandBody;
-        if (StringUtil.isNotBlank(commandBody)) {
+        if (StringUtil.isBlank(commandBody)) {
             configPath = context.getConfigPath();
         }
 
