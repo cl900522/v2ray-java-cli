@@ -59,7 +59,7 @@
     },
     "streamSettings": {
       "network": "${server.network}",
-      "security": "tls",
+      "security": "${server.security}",
       "tlsSettings": null,
       "tcpSettings": null,
       "kcpSettings": null,

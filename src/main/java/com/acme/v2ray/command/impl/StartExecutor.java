@@ -90,6 +90,13 @@ public class StartExecutor extends AbsExecutor {
             template = template.replace("${bind.ip}", env.getBindIp());
             template = template.replace("${server.id}", v2rayServer.getUserId());
             template = template.replace("${server.email}", "t@t.tt");
+
+            if (StringUtil.isBlank(v2rayServer.getTls()) || "none".equals(v2rayServer.getTls())) {
+                template = template.replace("${server.security}", "");
+            } else {
+                template = template.replace("${server.security}", v2rayServer.getTls());
+            }
+
             template = template.replace("${server.network}", v2rayServer.getNet());
             template = template.replace("${local.socksPort}", String.valueOf(env.getSocksPort()));
             template = template.replace("${local.httpPort}", String.valueOf(env.getHttpPort()));

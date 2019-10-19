@@ -12,16 +12,19 @@ public class V2rayServer implements Comparable {
     }
 
     public V2rayServer(VmessServer vmessServer) {
+        this.ver = vmessServer.getV();
         this.name = vmessServer.getPs();
         this.host = vmessServer.getAdd();
         this.port = Integer.valueOf(vmessServer.getPort().trim());
         this.userId = vmessServer.getId();
         this.email = "t@t.tt";
         this.net = vmessServer.getNet();
+        this.tls = vmessServer.getTls();
     }
 
     private Integer idx = 0;
 
+    private String ver;
     private String group;
     private String name;
     private String host;
@@ -29,6 +32,15 @@ public class V2rayServer implements Comparable {
     private String userId;
     private String email;
     private String net;
+    private String tls;
+
+    public String getVer() {
+        return ver;
+    }
+
+    public void setVer(String ver) {
+        this.ver = ver;
+    }
 
     public String getGroup() {
         return group;
@@ -92,6 +104,14 @@ public class V2rayServer implements Comparable {
 
     public void setNet(String net) {
         this.net = net;
+    }
+
+    public String getTls() {
+        return tls;
+    }
+
+    public void setTls(String tls) {
+        this.tls = tls;
     }
 
     @Override
