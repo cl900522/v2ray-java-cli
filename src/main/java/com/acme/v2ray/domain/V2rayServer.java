@@ -124,17 +124,17 @@ public class V2rayServer implements Comparable {
         if (o == null) {
             return 1;
         }
+        if (this.group == null) {
+            return -1;
+        }
         if (!(o instanceof V2rayServer)) {
             return 1;
         }
         V2rayServer to = (V2rayServer) o;
-        if (this.idx == null) {
-            this.idx = 0;
-        }
-        if (to.idx == null) {
-            to.idx = 0;
+        if (to.group == null) {
+            return -1;
         }
 
-        return this.idx - to.idx;
+        return this.group.compareTo(to.group);
     }
 }
