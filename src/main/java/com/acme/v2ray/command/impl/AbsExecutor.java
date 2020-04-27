@@ -46,7 +46,7 @@ public abstract class AbsExecutor implements CommandExecutor {
         for (V2rayServer v2rayServer : v2rayServers) {
             Tip.success(v2rayServer.toString());
         }
-        Tip.success("请使用select [n]选择服务的代号：");
+        Tip.success("请使用start [n]选择服务的代号：");
     }
 
     protected VmessServer parseServer(String line) {

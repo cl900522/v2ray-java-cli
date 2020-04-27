@@ -5,8 +5,9 @@ import com.acme.v2ray.domain.VmessServer;
 import com.acme.v2ray.io.Tip;
 import com.acme.v2ray.util.StringUtil;
 import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
@@ -98,13 +99,17 @@ public class SubExecutor extends AbsExecutor {
 
     private static String getSub(String url) {
         CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+
         CloseableHttpResponse httpresponse = null;
         try {
-            HttpPost httpPost = new HttpPost();
-            httpPost.setURI(URI.create(url));
-            httpPost.addHeader(new BasicHeader("content-type","text/html; charset=UTF-8"));
-            httpPost.addHeader(new BasicHeader("user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"));
-            httpresponse = httpclient.execute(httpPost);
+            HttpGet httpGet = new HttpGet();
+            httpGet.setURI(URI.create(url));
+            httpGet.addHeader(new BasicHeader("content-type","text/html; charset=UTF-8"));
+            httpGet.addHeader(new BasicHeader("user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"));
+            RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(1000)
+                    .setSocketTimeout(10000).setConnectTimeout(10000).build();
+            httpGet.setConfig(requestConfig);
+            httpresponse = httpclient.execute(httpGet);
 
             if (httpresponse.getStatusLine().getStatusCode() != HTTP_SUCCESS) {
                 HttpEntity entity = httpresponse.getEntity();
