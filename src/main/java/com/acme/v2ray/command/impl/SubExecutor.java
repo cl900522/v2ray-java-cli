@@ -60,6 +60,9 @@ public class SubExecutor extends AbsExecutor {
 
     private void subUrl(Context context, String group, String subUrl) {
         String subContent = getSub(subUrl);
+        if (subContent == null) {
+            return;
+        }
         String content = parseBase64(subContent);
 
         List<VmessServer> vmessServers = parseContentToServers(content);
