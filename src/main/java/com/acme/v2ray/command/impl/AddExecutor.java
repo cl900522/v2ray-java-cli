@@ -21,6 +21,7 @@ public class AddExecutor extends AbsExecutor {
         VmessServer vmessServer = parseServer(commandBody);
         if (vmessServer == null) {
             Tip.fail("解析服务器信息失败：" + commandBody);
+            return;
         }
 
         context.addVmessServer(vmessServer, "manual");

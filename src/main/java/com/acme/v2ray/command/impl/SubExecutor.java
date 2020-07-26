@@ -90,6 +90,10 @@ public class SubExecutor extends AbsExecutor {
                 }
 
                 VmessServer v2rayServer = parseServer(line);
+                if (v2rayServer == null) {
+                    Tip.fail("解析服务器信息失败：" + line);
+                    continue;
+                }
                 servers.add(v2rayServer);
             }
 
